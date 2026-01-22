@@ -1,0 +1,25 @@
+docker exec -it kafka bash 
+cd /opt/kafka/bin
+ls
+
+./kafka-topics.sh --create \
+  --topic raw_events \
+  --bootstrap-server host.docker.internal:29092 \
+  --partitions 3 \
+  --replication-factor 1
+
+./kafka-topics.sh --create \
+  --topic clean_events \
+  --bootstrap-server kafka:9092 \
+  --partitions 3 \
+  --replication-factor 1
+
+./kafka-topics.sh --list \
+  --bootstrap-server kafka:9092
+
+./kafka-topics.sh --describe \
+  --topic raw_events \
+  --bootstrap-server kafka:9092
+
+pip install snowflake-connector-python pandas pyarrow
+
